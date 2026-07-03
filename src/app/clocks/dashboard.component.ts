@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { TimeService } from '../services/time.service';
 import { AuthService } from '../services/auth.service';
 
-// Importación directa de los relojes abstractos creados abajo
 import { SandClockComponent } from './sand-clock.component';
 import { CandleClockComponent } from './candle-clock.component';
 import { SolarClockComponent } from './solar-clock.component';
