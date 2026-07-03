@@ -1,0 +1,13 @@
+.dashboard-layout { display: flex; flex-direction: column; height: 100vh; background: #0a0a12; color: #fff; font-family: system-ui, sans-serif; }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: #111122; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.brand { font-weight: bold; font-size: 1.2rem; color: #00ffcc; }
+.clock-dropdown { padding: 0.6rem 1rem; background: #1a1a3a; border: 1px solid #00ffcc; border-radius: 6px; color: white; cursor: pointer; outline: none; }
+.btn-logout { background: transparent; border: 1px solid #ff5555; color: #ff5555; padding: 0.5rem 1rem; margin-left: 1rem; border-radius: 6px; cursor: pointer; }
+.viewer-area { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; }
+.clock-card { width: 100%; max-width: 600px; background: #111122; border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid rgba(255,255,255,0.03); }
+.control-footer { background: #111122; padding: 1.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+.slider-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.8rem; }
+.time-slider { width: 300px; accent-color: #00ffcc; }
+.btn-reset { background: #00ffcc; border: none; color: black; padding: 0.3rem 0.8rem; border-radius: 4px; font-weight: bold; cursor: pointer; }
+.date-metadata { color: #8a8a9e; font-size: 0.85rem; }
+.placeholder-clock { padding: 3rem; color: #a0a0b8; font-style: italic; }

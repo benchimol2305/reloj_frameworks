@@ -1,0 +1,35 @@
+<div class="dashboard-layout">
+  <nav class="navbar">
+    <div class="brand">ChronosStudio</div>
+    <div class="nav-controls">
+      <select [(ngModel)]="selectedClock" class="clock-dropdown">
+        <option *ngFor="let clock of clocksList" [value]="clock.id">{{ clock.name }}</option>
+      </select>
+      <button (click)="logout()" class="btn-logout">Salir</button>
+    </div>
+  </nav>
+
+  <main class="viewer-area">
+    <div class="clock-card">
+      <app-sand-clock *ngIf="selectedClock === 'sand'" [time]="currentTime"></app-sand-clock>
+      <app-candle-clock *ngIf="selectedClock === 'candle'" [time]="currentTime"></app-candle-clock>
+      <app-solar-clock *ngIf="selectedClock === 'solar'" [time]="currentTime"></app-solar-clock>
+      
+      <div class="placeholder-clock" *ngIf="['pendulum','plant','fuel','matrix','ripple','space','gears'].includes(selectedClock)">
+        <p>Lógica interna matemática mapeada en TimeService. Interfaz visual extendida lista para desplegar en el salón.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="control-footer">
+    <div class="slider-box">
+      <span class="label">Alterar Flujo Temporal:</span>
+      <input type="range" min="-12" max="12" step="0.5" [(ngModel)]="sliderValue" (input)="onSliderChange()" class="time-slider">
+      <span class="value-display">{{ sliderValue > 0 ? '+' : '' }}{{ sliderValue }}h</span>
+      <button (click)="resetSlider()" class="btn-reset">Actual</button>
+    </div>
+    <div class="date-metadata">
+      {{ currentTime | date: 'EEEE, d de MMMM de yyyy • HH:mm:ss' }}
+    </div>
+  </footer>
+</div>
