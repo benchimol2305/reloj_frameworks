@@ -25,21 +25,28 @@ import { SolarClockComponent } from './solar-clock.component';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   selectedClock = 'sand';
-  sliderValue = 0;
+  
+
+  sliderMinutes = 0; 
+  
   currentTime: Date = new Date();
+  displayHours = 0;
+  displayMinutes = 0;
+  displaySeconds = 0;
   private timeSub!: Subscription;
+
 
   clocksList = [
     { id: 'sand', name: '⌛ Reloj de Arena Animado' },
     { id: 'candle', name: '🕯️ La Vela Derritiéndose' },
     { id: 'solar', name: '☀️ Ciclo Solar y Lunar' },
-    { id: 'pendulum', name: '⛓️ El Péndulo Caótico (Estructura lógica)' },
-    { id: 'plant', name: '🌱 Crecimiento Orgánico (Estructura lógica)' },
-    { id: 'fuel', name: '⛽ Medidor de Combustible (Estructura lógica)' },
-    { id: 'matrix', name: '💾 Cascada de Código Digital (Estructura lógica)' },
-    { id: 'ripple', name: '🌊 Marea y Ondas (Estructura lógica)' },
-    { id: 'space', name: '🪐 Órbitas Planetarias (Estructura lógica)' },
-    { id: 'gears', name: '⚙️ Mecanismo de Engranajes (Estructura lógica)' }
+    { id: 'pendulum', name: '⛓️ El Péndulo Caótico' },
+    { id: 'plant', name: '🌱 Crecimiento Orgánico' },
+    { id: 'fuel', name: '⛽ Medidor de Combustible' },
+    { id: 'matrix', name: '💾 Cascada de Código Digital' },
+    { id: 'ripple', name: '🌊 Marea y Ondas Concéntricas' },
+    { id: 'space', name: '🪐 Órbitas Planetarias' },
+    { id: 'gears', name: '⚙️ Mecanismo de Engranajes' }
   ];
 
   constructor(
@@ -51,15 +58,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.timeSub = this.timeService.time$.subscribe(time => {
       this.currentTime = time;
+      this.displayHours = time.getHours();
+      this.displayMinutes = time.getMinutes();
+      this.displaySeconds = time.getSeconds();
+      
+
+      if (this.sliderMinutes === 0) {
+        this.sliderMinutes = (this.displayHours * 60) + this.displayMinutes;
+      }
     });
   }
 
+
   onSliderChange(): void {
-    this.timeService.setOffset(this.sliderValue);
+    const targetHours = Math.floor(this.sliderMinutes / 60);
+    const targetMinutes = this.sliderMinutes % 60;
+    
+    const now = new Date();
+    const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), targetHours, targetMinutes, 0);
+    
+    
+    const offsetMs = targetDate.getTime() - now.getTime();
+    
+   
+    this.timeService.setOffset(offsetMs / (60 * 60 * 1000));
   }
 
   resetSlider(): void {
-    this.sliderValue = 0;
+    const now = new Date();
+    this.sliderMinutes = (now.getHours() * 60) + now.getMinutes();
     this.timeService.resetTime();
   }
 

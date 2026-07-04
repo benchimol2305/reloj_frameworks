@@ -1,13 +1,207 @@
-.dashboard-layout { display: flex; flex-direction: column; height: 100vh; background: #0a0a12; color: #fff; font-family: system-ui, sans-serif; }
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: #111122; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
-.brand { font-weight: bold; font-size: 1.2rem; color: #00ffcc; }
-.clock-dropdown { padding: 0.6rem 1rem; background: #1a1a3a; border: 1px solid #00ffcc; border-radius: 6px; color: white; cursor: pointer; outline: none; }
-.btn-logout { background: transparent; border: 1px solid #ff5555; color: #ff5555; padding: 0.5rem 1rem; margin-left: 1rem; border-radius: 6px; cursor: pointer; }
-.viewer-area { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; }
-.clock-card { width: 100%; max-width: 600px; background: #111122; border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid rgba(255,255,255,0.03); }
-.control-footer { background: #111122; padding: 1.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
-.slider-box { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.8rem; }
-.time-slider { width: 300px; accent-color: #00ffcc; }
-.btn-reset { background: #00ffcc; border: none; color: black; padding: 0.3rem 0.8rem; border-radius: 4px; font-weight: bold; cursor: pointer; }
-.date-metadata { color: #8a8a9e; font-size: 0.85rem; }
-.placeholder-clock { padding: 3rem; color: #a0a0b8; font-style: italic; }
+/* Contenedor General (Fondo oscuro original recuperado) */
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0a0a12;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Navbar Elegante */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #111122;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  color: #00ffcc;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.clock-dropdown {
+  padding: 0.6rem 1rem;
+  background: #1a1a3a;
+  border: 1px solid #00ffcc;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid #ff5555;
+  color: #ff5555;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover {
+  background: #ff5555;
+  color: #000;
+}
+
+/* Área Central de Visualización */
+.viewer-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Tarjeta del Reloj */
+.clock-card {
+  width: 100%;
+  max-width: 600px;
+  background: #111122;
+  border-radius: 16px;
+  padding: 2.5rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Badge del Tiempo Interno Solicitado */
+.clock-time-badge {
+  background: rgba(0, 255, 204, 0.07);
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  display: inline-block;
+  font-weight: bold;
+  color: #00ffcc;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+/* Footer de Controles */
+.control-footer {
+  background: #111122;
+  padding: 1.5rem;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.slider-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.label {
+  color: #a0a0b8;
+  font-size: 0.95rem;
+}
+
+.time-slider {
+  width: 320px;
+  accent-color: #00ffcc;
+  cursor: pointer;
+}
+
+.value-display {
+  font-weight: bold;
+  color: #00ffcc;
+  min-width: 60px;
+  text-align: left;
+}
+
+.btn-reset {
+  background: #00ffcc;
+  border: none;
+  color: black;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.btn-reset:hover {
+  transform: scale(1.05);
+}
+
+.date-metadata {
+  color: #63637e;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* --- Estilos de los Componentes de los Relojes --- */
+.abstract-canvas-render {
+  padding: 1rem;
+  text-align: center;
+}
+
+.abstract-canvas-render h3 {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.desc {
+  font-size: 0.85rem;
+  color: #8a8a9e;
+  margin-top: 1.5rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Péndulo */
+.pendulum-container { height: 120px; position: relative; width: 100%; display: flex; justify-content: center; }
+.pendulum-rod { width: 4px; height: 100px; background: #fff; position: relative; transform-origin: top center; transition: transform 0.5s ease-in-out; }
+.pendulum-bob { width: 24px; height: 24px; background: #0077ff; border-radius: 50%; position: absolute; bottom: -12px; left: -10px; box-shadow: 0 0 12px #0077ff; }
+
+/* Planta */
+.plant-box { height: 160px; display: flex; align-items: flex-end; justify-content: center; }
+.stem { width: 6px; background: #22c55e; position: relative; transition: height 0.5s ease; max-height: 150px; }
+.leaf-left { width: 20px; height: 10px; background: #22c55e; border-radius: 10px 0; position: absolute; left: -20px; top: 40%; }
+.leaf-right { width: 20px; height: 10px; background: #22c55e; border-radius: 0 10px; position: absolute; right: -20px; top: 60%; }
+
+/* Combustible */
+.fuel-tank { width: 80%; max-width: 300px; height: 24px; background: #222; border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; margin: 0 auto; overflow: hidden; padding: 2px; }
+.fuel-gauge { height: 100%; background: linear-gradient(90deg, #ff3300, #ffcc00, #00ffcc); border-radius: 8px; transition: width 0.4s ease; }
+
+/* Matrix */
+.matrix-grid { display: flex; justify-content: center; gap: 1.5rem; height: 100px; overflow: hidden; font-family: monospace; font-size: 1.2rem; color: #00ffcc; }
+.matrix-stream { display: flex; flex-direction: column; animation: fall linear infinite; }
+@keyframes fall { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+
+/* Marea */
+.sea-container { width: 140px; height: 140px; border: 2px solid rgba(255,255,255,0.1); border-radius: 50%; margin: 0 auto; display: flex; align-items: flex-end; overflow: hidden; background: #1a1a3a; }
+.water-level { width: 100%; background: linear-gradient(to top, #0055ff, #00aaff); transition: height 0.5s ease; }
+
+/* Sistema Planetario */
+.solar-system { position: relative; width: 180px; height: 180px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+.sun-core { width: 20px; height: 20px; background: #ffcc00; border-radius: 50%; box-shadow: 0 0 15px #ffcc00; }
+.orbit-ring { position: absolute; border: 1px dashed rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.ring-1 { width: 90px; height: 90px; }
+.ring-2 { width: 160px; height: 160px; }
+.planet { width: 8px; height: 8px; background: #00ffcc; border-radius: 50%; position: absolute; }
+.planet.gas { width: 14px; height: 14px; background: #ff5555; }
+
+/* Engranajes */
+.gears-wrapper { display: flex; justify-content: center; align-items: center; gap: 5px; height: 100px; font-size: 3.5rem; }
+.gear { display: inline-block; transition: transform 0.1s linear; color: #535370; }
+.gear-main { color: #00ffcc; }

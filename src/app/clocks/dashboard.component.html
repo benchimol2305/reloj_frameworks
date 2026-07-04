@@ -1,6 +1,6 @@
 <div class="dashboard-layout">
   <nav class="navbar">
-    <div class="brand">ChronosStudio</div>
+    <div class="brand">🕒 ChronosStudio</div>
     <div class="nav-controls">
       <select [(ngModel)]="selectedClock" class="clock-dropdown">
         <option *ngFor="let clock of clocksList" [value]="clock.id">{{ clock.name }}</option>
@@ -11,21 +11,110 @@
 
   <main class="viewer-area">
     <div class="clock-card">
+      
+     
+      <div class="clock-time-badge">
+        Tiempo Interno: {{ displayHours | number:'2.0-0' }}:{{ displayMinutes | number:'2.0-0' }}
+      </div>
+
+      
       <app-sand-clock *ngIf="selectedClock === 'sand'" [time]="currentTime"></app-sand-clock>
       <app-candle-clock *ngIf="selectedClock === 'candle'" [time]="currentTime"></app-candle-clock>
       <app-solar-clock *ngIf="selectedClock === 'solar'" [time]="currentTime"></app-solar-clock>
       
-      <div class="placeholder-clock" *ngIf="['pendulum','plant','fuel','matrix','ripple','space','gears'].includes(selectedClock)">
-        <p>Lógica interna matemática mapeada en TimeService. Interfaz visual extendida lista para desplegar en el salón.</p>
+     
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'pendulum'">
+        <h3>⛓️ El Péndulo Caótico</h3>
+        <div class="pendulum-container">
+          <div class="pendulum-rod" [style.transform]="'rotate(' + (displaySeconds % 2 === 0 ? '30' : '-30') + 'deg)'">
+            <div class="pendulum-bob"></div>
+          </div>
+        </div>
+        <p class="desc">Oscilación ligada a los segundos. Amplitud del arco controlada por las horas.</p>
       </div>
+
+ 
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'plant'">
+        <h3>🌱 Crecimiento Orgánico</h3>
+        <div class="plant-box">
+          <div class="stem" [style.height.px]="(displayHours * 8) + 20">
+            <div class="leaf-left" *ngIf="displayMinutes > 15"></div>
+            <div class="leaf-right" *ngIf="displayMinutes > 45"></div>
+          </div>
+        </div>
+        <p class="desc">La altura del tallo refleja las horas del día. Las hojas brotan por minuto.</p>
+      </div>
+
+   
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'fuel'">
+        <h3>⛽ Medidor de Combustible</h3>
+        <div class="fuel-tank">
+          <div class="fuel-gauge" [style.width.%]="((displayHours * 60) + displayMinutes) / 14.4"></div>
+        </div>
+        <p class="desc">Nivel de tanque que se consume proporcionalmente desde 100% (00:00h) hasta 0% (23:59h).</p>
+      </div>
+
+      
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'matrix'">
+        <h3>💾 Cascada de Código Digital</h3>
+        <div class="matrix-grid">
+          <span *ngFor="let item of [1,2,3,4,5]" class="matrix-stream" [style.animation-duration]="(displaySeconds % 5 + 1) + 's'">
+            {{ displayHours }}{{ displayMinutes }}{{ displaySeconds }}
+          </span>
+        </div>
+        <p class="desc">Velocidad del flujo binario alterado dinámicamente por la frecuencia de los segundos.</p>
+      </div>
+
+     
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'ripple'">
+        <h3>🌊 Marea y Ondas Concéntricas</h3>
+        <div class="sea-container">
+          <div class="water-level" [style.height.%]="(displayMinutes / 60) * 100"></div>
+        </div>
+        <p class="desc">Marea que sube y baja completando ciclos por cada hora transcurrida.</p>
+      </div>
+
+     
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'space'">
+        <h3>🪐 Órbitas Planetarias</h3>
+        <div class="solar-system">
+          <div class="sun-core"></div>
+          <div class="orbit-ring ring-1">
+            <div class="planet" [style.transform]="'rotate(' + (displayMinutes * 6) + 'deg) translateX(50px)'"></div>
+          </div>
+          <div class="orbit-ring ring-2">
+            <div class="planet gas" [style.transform]="'rotate(' + (displayHours * 15) + 'deg) translateX(90px)'"></div>
+          </div>
+        </div>
+        <p class="desc">Planeta interno mapea los minutos (giro completo de 360°); planeta exterior las horas.</p>
+      </div>
+
+     
+      <div class="abstract-canvas-render" *ngIf="selectedClock === 'gears'">
+        <h3>⚙️ Mecanismo de Engranajes</h3>
+        <div class="gears-wrapper">
+          <div class="gear gear-main" [style.transform]="'rotate(' + (displaySeconds * 6) + 'deg)'">⚙️</div>
+          <div class="gear gear-sub" [style.transform]="'rotate(-' + (displayMinutes * 6) + 'deg)'">⚙️</div>
+        </div>
+        <p class="desc">Sincronización física de engranajes acoplados rotando por segundo y minuto real.</p>
+      </div>
+
     </div>
   </main>
 
   <footer class="control-footer">
     <div class="slider-box">
-      <span class="label">Alterar Flujo Temporal:</span>
-      <input type="range" min="-12" max="12" step="0.5" [(ngModel)]="sliderValue" (input)="onSliderChange()" class="time-slider">
-      <span class="value-display">{{ sliderValue > 0 ? '+' : '' }}{{ sliderValue }}h</span>
+      <span class="label">Fijar Tiempo del Día:</span>
+    
+      <input 
+        type="range" 
+        min="0" 
+        max="1439" 
+        [(ngModel)]="sliderMinutes" 
+        (input)="onSliderChange()" 
+        class="time-slider"
+      >
+      <span class="value-display">{{ displayHours | number:'2.0-0' }}:{{ displayMinutes | number:'2.0-0' }} h</span>
       <button (click)="resetSlider()" class="btn-reset">Actual</button>
     </div>
     <div class="date-metadata">
